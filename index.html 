@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Asphalt Nitro: Santa's Express Dash 🎄</title>
+  <style>
+    :root {
+      --gold: #f1c40f;
+      --gold-glow: #f39c12;
+      --red: #e74c3c;
+      --dark-red: #c0392b;
+      --green: #2ecc71;
+      --neon-blue: #00d2d3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', 'Segoe UI', Tahoma, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #1b2a47 0%, #0a1118 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+      padding: 15px 10px;
+      position: relative;
+    }
+
+    /* Falling Snowfall */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #ffffff;
+      z-index: 1;
+      pointer-events: none;
+      animation: fall linear infinite;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes fall {
+      to { transform: translateY(105vh) rotate(360deg); }
+    }
+
+    /* Decorative Christmas Garland Bar */
+    .garland-top {
+      width: 100%;
+      height: 25px;
+      background: repeating-linear-gradient(90deg, #10ac84 0px, #10ac84 20px, #e74c3c 20px, #e74c3c 40px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+
+    /* Main Container Card */
+    .container {
+      background: rgba(10, 18, 32, 0.88);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(241, 196, 15, 0.25);
+      z-index: 2;
+      margin-top: 30px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #ff4d4d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Animated 3D CSS Christmas Tree */
+    .tree-stage {
+      perspective: 400px;
+      margin: 10px auto 20px auto;
+      width: 100px;
+    }
+
+    .tree-wrapper {
+      position: relative;
+      width: 100px;
+      transform-style: preserve-3d;
+      animation: floatTree 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatTree {
+      from { transform: translateY(0px) rotateY(-5deg); }
+      to { transform: translateY(-8px) rotateY(5deg); }
+    }
+
+    .star-glow {
+      font-size: 2.2rem;
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold-glow);
+      animation: pulseStar 1.2s infinite alternate;
+    }
+
+    @keyframes pulseStar {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+
+    .tree-layer {
+      width: 0; height: 0;
+      border-left: 45px solid transparent;
+      border-right: 45px solid transparent;
+      border-bottom: 35px solid #27ae60;
+      margin: -16px auto 0 auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    }
+
+    .tree-layer.top { border-left-width: 25px; border-right-width: 25px; border-bottom-width: 25px; margin-top: -5px; }
+    .tree-layer.middle { border-left-width: 35px; border-right-width: 35px; border-bottom-width: 30px; border-bottom-color: #2ecc71; }
+    
+    .trunk {
+      width: 18px; height: 18px;
+      background: #795548;
+      margin: 0 auto;
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* REALISTIC COUNTDOWN BOXES */
+    .countdown-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 12px;
+      border: 1px solid rgba(241, 196, 15, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .countdown-title {
+      font-size: 0.85rem;
+      color: #ddd;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .time-box {
+      background: linear-gradient(180deg, #1e272e, #0f171e);
+      border-radius: 10px;
+      padding: 8px 10px;
+      min-width: 65px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 0 8px rgba(241, 196, 15, 0.5);
+    }
+
+    .time-box label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      color: #a4b0be;
+      font-weight: bold;
+    }
+
+    /* GAME INTERFACE */
+    .game-section {
+      position: relative;
+    }
+
+    .hud-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hud-val {
+      color: var(--gold);
+    }
+
+    /* Nitro Bar (Asphalt Style) */
+    .nitro-container {
+      width: 100%;
+      height: 12px;
+      background: #1e272e;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+    }
+
+    .nitro-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00d2d3, #ff4757);
+      box-shadow: 0 0 10px #00d2d3;
+      transition: width 0.1s linear;
+    }
+
+    .nitro-text {
+      position: absolute;
+      top: -1px;
+      width: 100%;
+      font-size: 0.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 3px #000;
+      line-height: 14px;
+    }
+
+    /* Canvas Canvas Setup */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      background: #111;
+      border-radius: 15px;
+      border: 2px solid var(--gold);
+      width: 100%;
+      height: auto;
+      display: block;
+      touch-action: none;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+
+    /* Controls Bar */
+    .ctrl-bar {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      background: linear-gradient(180deg, var(--red), var(--dark-red));
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      flex: 1;
+      touch-action: manipulation;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-nitro {
+      background: linear-gradient(180deg, #00d2d3, #01a3a4);
+      color: #fff;
+    }
+
+    /* OVERLAYS & MODALS */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 15, 25, 0.92);
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 5;
+    }
+
+    .overlay h2 {
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .overlay p {
+      font-size: 0.85rem;
+      line-height: 1.3;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      display: none;
+      text-align: left;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* Reward Section */
+    .challenge-box {
+      background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(231, 76, 60, 0.2));
+      border: 1px dashed var(--gold);
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-size: 0.8rem;
+    }
+      .reward-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 800;
+      margin-top: 5px;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="garland-top"></div>
+
+  <div class="container">
+    <h1>Asphalt Santa 🎄</h1>
+    <div class="subtitle">Nitro Sleigh Championship</div>
+
+    <!-- 3D Christmas Tree -->
+    <div class="tree-stage">
+      <div class="tree-wrapper">
+        <div class="star-glow">★</div>
+        <div class="tree-layer top"></div>
+        <div class="tree-layer middle"></div>
+        <div class="tree-layer"></div>
+        <div class="trunk"></div>
+      </div>
+    </div>
+
+    <!-- Realistic Countdown -->
+    <div class="countdown-section">
+      <div class="countdown-title">🎅 Days Until Christmas</div>
+      <div class="countdown">
+        <div class="time-box"><span id="days">00</span><label>Days</label></div>
+        <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+        <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
+        <div class="time-box"><span id="seconds">00</span><label>Secs</label></div>
+      </div>
+    </div>
+
+    <!-- Asphalt Game Engine HUD -->
+    <div class="game-section">
+      <div class="hud-bar">
+        <div>STAGE: <span id="levelHud" class="hud-val">1</span></div>
+        <div>SCORE: <span id="scoreHud" class="hud-val">0</span></div>
+        <div>BEST: <span id="highHud" class="hud-val">0</span></div>
+        <div>LIVES: <span id="livesHud">❤️❤️❤️</span></div>
+      </div>
+
+      <!-- Nitro Boost Gauge -->
+      <div class="nitro-container">
+        <div class="nitro-fill" id="nitroFill"></div>
+        <div class="nitro-text">NITRO BOOST (SPACE / TAP)</div>
+      </div>
+
+      <!-- Game Stage -->
+      <div class="canvas-container">
+        <canvas id="gameCanvas" width="340" height="420"></canvas>
+
+        <!-- Overlay Menu / Pause / Victory -->
+        <div class="overlay" id="overlay">
+          <h2 id="overlayTitle">NITRO SLEIGH DASH</h2>
+          <p id="overlayDesc">Reach 500 Pts to Unlock Santa's Golden Certificate Reward!</p>
+
+          <!-- Settings Collapsible -->
+          <div class="settings-panel" id="settingsPanel">
+            <div class="setting-row">
+              <label>Sleigh Speed:</label>
+              <select id="speedSetting">
+                <option value="normal">Normal</option>
+                <option value="fast">Asphalt Turbo</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <label>Control Mode:</label>
+              <select id="controlSetting">
+                <option value="buttons">On-Screen Buttons</option>
+                <option value="drag">Touch Drag / Mouse</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <label>Real Jingle Bells FX:</label>
+              <input type="checkbox" id="soundSetting" checked>
+            </div>
+          </div>
+
+          <button class="btn" id="startBtn">START ENGINE</button>
+          <button class="btn" id="settingsBtn" style="margin-top:6px; background:#34495e;">⚙️ SETTINGS</button>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="ctrl-bar">
+        <button class="btn" id="leftBtn">◀ LEFT</button>
+        <button class="btn btn-nitro" id="nitroBtn">⚡ NITRO</button>
+        <button class="btn" id="rightBtn">RIGHT ▶</button>
+      </div>
+
+      <!-- Guaranteed Reward Challenge -->
+      <div class="challenge-box">
+        <strong>🏆 PROMISED REWARD CHALLENGE:</strong>
+        <div>Reach <strong>Stage 3 (500+ Pts)</strong> to unlock Santa's Secret Golden Trophy & Honorary Elf Badge!</div>
+        <div class="reward-badge" id="rewardBadge">🔒 LOCKED</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 1. SNOW GENERATOR */
+    function initSnow() {
+      for(let i=0; i<25; i++) {
+        setTimeout(createSnowflake, i * 200);
+      }
+    }
+    function createSnowflake() {
+      const sf = document.createElement('div');
+      sf.className = 'snowflake';
+      sf.innerText = ['❄', '❅', '❆'][Math.floor(Math.random()*3)];
+      sf.style.left = Math.random() * 100 + 'vw';
+      sf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      sf.style.opacity = Math.random();
+      sf.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      document.body.appendChild(sf);
+      setTimeout(() => sf.remove(), 5000);
+    }
+    setInterval(createSnowflake, 200);
+    initSnow();
+
+    /* 2. REALTIME COUNTDOWN TIMER */
+    function updateCountdown() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let xmas = new Date(`December 25, ${year} 00:00:00`);
+      if (now > xmas) xmas = new Date(`December 25, ${year + 1} 00:00:00`);
+
+      const diff = xmas - now;
+      document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+      document.getElementById('hours').innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    /* 3. REALISTIC SYNTHESIZED JINGLE BELL & ENGINE AUDIO ENGINE */
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    // Realistic Metallic Jingle Bell Sound Synthesizer
+    function playJingleBell() {
+      if(!document.getElementById('soundSetting').checked) return;
+      const ctx = getAudioContext();
+      
+      // Jingle Bell frequencies (Inharmonic metallic overtones)
+      const frequencies = [2640, 3960, 5280, 7100];
+      
+      frequencies.forEach(freq => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq + (Math.random()*40 - 20), ctx.currentTime);
+        
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      });
+    }
+
+    function playCrashSound() {
+      if(!document.getElementById('soundSetting').checked) return;
+      const ctx = getAudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(120, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.4);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.4);
+    }
+
+    /* 4. ASPHALT NITRO GAME ENGINE */
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const overlay = document.getElementById('overlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlayDesc = document.getElementById('overlayDesc');
+    const startBtn = document.getElementById('startBtn');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+
+    const scoreHud = document.getElementById('scoreHud');
+    const levelHud = document.getElementById('levelHud');
+    const highHud = document.getElementById('highHud');
+    const livesHud = document.getElementById('livesHud');
+    const nitroFill = document.getElementById('nitroFill');
+    const rewardBadge = document.getElementById('rewardBadge');
+
+    let isPlaying = false;
+    let score = 0;
+    let level = 1;
+    let lives = 3;
+    let nitro = 0; // 0 to 100
+    let isNitroActive = false;
+    let highScore = localStorage.getItem('asphalt_santa_high') || 0;
+    highHud.innerText = highScore;
+
+    let speedMultiplier = 1;
+    let roadOffset = 0;
+    let gameLoop = null;
+
+    const player = {
+      x: canvas.width / 2 - 18,
+      y: canvas.height - 75,
+      width: 36,
+      height: 55,
+      baseSpeed: 5,
+      dx: 0
+    };
+
+    let items = [];
+
+    // Settings Toggle
+    settingsBtn.addEventListener('click', () => {
+      settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
+    });
+
+    function resetGame() {
+      score = 0;
+      level = 1;
+      lives = 3;
+      nitro = 0;
+      player.x = canvas.width / 2 - player.width / 2;
+      items = [];
+      scoreHud.innerText = score;
+      levelHud.innerText = level;
+      updateLives();
+      updateNitro(0);
+    }
+
+    function updateLives() {
+      livesHud.innerText = "❤️".repeat(Math.max(0, lives));
+    }
+
+    function updateNitro(val) {
+      nitro = Math.min(100, Math.max(0, val));
+      nitroFill.style.width = nitro + '%';
+    }
+
+    function spawnItem() {
+      const lanes = [65, 145, 225];
+      const rx = lanes[Math.floor(Math.random() * lanes.length)];
+      const rand = Math.random();
+
+      let type = 'rock'; // Obstacle
+      if (rand > 0.5) type = 'gift';   // Regular Gift
+      if (rand > 0.8) type = 'nitro';  // Nitro Bottle
+      if (rand > 0.92) type = 'star';  // Star
+
+      items.push({
+        x: rx - 14,
+        y: -50,
+        width: 28,
+        height: 28,
+        type: type,
+        speed: (3 + level * 1.2)
+      });
+    }
+
+    // Key Controls
+    let moveLeft = false, moveRight = false;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a') moveLeft = true;
+      if (e.key === 'ArrowRight' || e.key === 'd') moveRight = true;
+      if (e.key === ' ' || e.key === 'Shift') triggerNitro();
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a') moveLeft = false;
+      if (e.key === 'ArrowRight' || e.key === 'd') moveRight = false;
+    });
+
+    // Touch Controls
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+    const nitroBtn = document.getElementById('nitroBtn');
+
+    ['touchstart', 'mousedown'].forEach(e => {
+      leftBtn.addEventListener(e, (ev) => { ev.preventDefault(); moveLeft = true; });
+      rightBtn.addEventListener(e, (ev) => { ev.preventDefault(); moveRight = true; });
+    });
+
+    ['touchend', 'mouseup'].forEach(e => {
+      leftBtn.addEventListener(e, (ev) => { ev.preventDefault(); moveLeft = false; });
+      rightBtn.addEventListener(e, (ev) => { ev.preventDefault(); moveRight = false; });
+    });
+
+    nitroBtn.addEventListener('click', triggerNitro);
+
+    function triggerNitro() {
+      if (nitro >= 30 && !isNitroActive) {
+        isNitroActive = true;
+        speedMultiplier = 2.2;
+        playJingleBell();
+      }
+    }
+
+    // Touch Dragging
+    canvas.addEventListener('touchmove', (e) => {
+      if (document.getElementById('controlSetting').value !== 'drag') return;
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      player.x = (e.touches[0].clientX - rect.left) - player.width / 2;
+    }, { passive: false });
+
+    // DRAW ASPHALT-STYLE ROAD WITH PERSPECTIVE
+    function drawRoad() {
+      // Dark Asphalt
+      ctx.fillStyle = '#1a1d20';
+      ctx.fillRect(40, 0, canvas.width - 80, canvas.height);
+
+      // Neon Sidewalk Borders
+      ctx.fillStyle = isNitroActive ? '#00d2d3' : '
